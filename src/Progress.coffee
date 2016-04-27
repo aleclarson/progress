@@ -1,32 +1,43 @@
 
-{ Void, assertType, validateTypes } = require "type-utils"
+{ Void, Shape, assertType } = require "type-utils"
 
 clampValue = require "clampValue"
 
-Progress =
+ProgressRange = Shape "ProgressRange",
+  fromValue: Number
+  toValue: Number
+  easing: [ Function, Void ]
+  clamp: [ Boolean, Void ]
 
-  optionTypes: {
-    from: Number
-    to: Number
-    clamp: [ Boolean, Void ]
-  }
+module.exports =
 
-  fromValue: (value, options) ->
+  Range: ProgressRange
+
+  fromValue: (value, range) ->
+
     assertType value, Number
-    assertType options, Object
-    validateTypes options, @optionTypes
-    { from, to, clamp } = options
+    assertType range, ProgressRange
+
     progress = 1
-    progress = (value - from) / (to - from) if from isnt to
-    progress = clampValue progress, 0, 1 if clamp is yes
-    progress
 
-  toValue: (progress, options) ->
+    if range.fromValue isnt range.toValue
+      progress = value - range.fromValue           # Distance travelled.
+      progress /= range.toValue - range.fromValue  # Divide by total possible distance.
+
+    if range.clamp is yes
+      progress = clampValue progress, 0, 1
+
+    return progress
+
+  toValue: (progress, range) ->
+
     assertType progress, Number
-    assertType options, Object
-    validateTypes options, @optionTypes
-    { from, to, clamp } = options
-    progress = clampValue progress, 0, 1 if clamp is yes
-    from + progress * (to - from)
+    assertType range, ProgressRange
 
-module.exports = Progress
+    if range.clamp is yes
+      progress = clampValue progress, 0, 1
+
+    value = range.toValue - range.fromValue  # Total possible distance.
+    value *= progress                        # Multiply by progress.
+    value += range.fromValue                 # Add the minimum value.
+    return value

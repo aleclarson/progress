@@ -1,43 +1,44 @@
-var Progress, Void, assertType, clampValue, ref, validateTypes;
+var ProgressRange, Shape, Void, assertType, clampValue, ref;
 
-ref = require("type-utils"), Void = ref.Void, assertType = ref.assertType, validateTypes = ref.validateTypes;
+ref = require("type-utils"), Void = ref.Void, Shape = ref.Shape, assertType = ref.assertType;
 
 clampValue = require("clampValue");
 
-Progress = {
-  optionTypes: {
-    from: Number,
-    to: Number,
-    clamp: [Boolean, Void]
-  },
-  fromValue: function(value, options) {
-    var clamp, from, progress, to;
+ProgressRange = Shape("ProgressRange", {
+  fromValue: Number,
+  toValue: Number,
+  easing: [Function, Void],
+  clamp: [Boolean, Void]
+});
+
+module.exports = {
+  Range: ProgressRange,
+  fromValue: function(value, range) {
+    var progress;
     assertType(value, Number);
-    assertType(options, Object);
-    validateTypes(options, this.optionTypes);
-    from = options.from, to = options.to, clamp = options.clamp;
+    assertType(range, ProgressRange);
     progress = 1;
-    if (from !== to) {
-      progress = (value - from) / (to - from);
+    if (range.fromValue !== range.toValue) {
+      progress = value - range.fromValue;
+      progress /= range.toValue - range.fromValue;
     }
-    if (clamp === true) {
+    if (range.clamp === true) {
       progress = clampValue(progress, 0, 1);
     }
     return progress;
   },
-  toValue: function(progress, options) {
-    var clamp, from, to;
+  toValue: function(progress, range) {
+    var value;
     assertType(progress, Number);
-    assertType(options, Object);
-    validateTypes(options, this.optionTypes);
-    from = options.from, to = options.to, clamp = options.clamp;
-    if (clamp === true) {
+    assertType(range, ProgressRange);
+    if (range.clamp === true) {
       progress = clampValue(progress, 0, 1);
     }
-    return from + progress * (to - from);
+    value = range.toValue - range.fromValue;
+    value *= progress;
+    value += range.fromValue;
+    return value;
   }
 };
-
-module.exports = Progress;
 
 //# sourceMappingURL=../../map/src/Progress.map
