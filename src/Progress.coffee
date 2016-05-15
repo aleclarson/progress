@@ -1,7 +1,8 @@
 
-{ Void, Shape, assertType } = require "type-utils"
-
+assertType = require "assertType"
 clampValue = require "clampValue"
+Shape = require "Shape"
+Void = require "Void"
 
 ProgressRange = Shape "ProgressRange",
   fromValue: Number
