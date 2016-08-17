@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "./js/src/Progress",
   "dependencies": {
-    "Shape": "aleclarson/Shape#1.0.0",
+    "Shape": "aleclarson/Shape#2.0.0",
     "Void": "aleclarson/Void#1.0.0",
     "assertType": "aleclarson/assertType#1.0.0",
     "clampValue": "aleclarson/clampValue#1.0.0"
