@@ -45,4 +45,4 @@ module.exports = {
   }
 };
 
-//# sourceMappingURL=../../map/src/Progress.map
+//# sourceMappingURL=map/Progress.map
