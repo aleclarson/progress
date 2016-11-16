@@ -7,8 +7,8 @@ Void = require "Void"
 ProgressRange = Shape "ProgressRange",
   fromValue: Number
   toValue: Number
-  easing: [ Function, Void ]
-  clamp: [ Boolean, Void ]
+  easing: Function.Maybe
+  clamp: Boolean.Maybe
 
 module.exports =
 
