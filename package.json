@@ -10,9 +10,9 @@
     "postinstall": "npm run build"
   },
   "dependencies": {
-    "Shape": "aleclarson/Shape#2.0.0",
-    "Void": "aleclarson/Void#1.0.0",
-    "assertType": "aleclarson/assertType#2.0.0",
+    "Shape": "aleclarson/Shape#2.0.1",
+    "Void": "aleclarson/Void#1.0.1",
+    "assertType": "aleclarson/assertType#2.0.1",
     "clampValue": "aleclarson/clampValue#1.0.0"
   }
 }
